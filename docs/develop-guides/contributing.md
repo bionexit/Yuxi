@@ -171,6 +171,10 @@ git commit -m "docs: 完善部署与快速开始文档"
 git push -u origin docs/improve-guides
 ```
 
+推送的提交新增或修改 `.github/workflows/**` 时，HTTPS 推送使用的 OAuth token 或 classic PAT 必须包含 `workflow` scope，否则 GitHub 拒绝该推送；使用 `gh` 登录的贡献者执行 `gh auth refresh -s workflow` 补齐后重试。
+
+fine-grained PAT 需要 Workflows 写权限。SSH 推送不使用 token，不受该 scope 检查。同一仓库中其他分支已存在同路径、同内容的 workflow 文件时豁免。`workflow` scope 只授权添加和更新 workflow 文件，不读取主仓库 Secrets，OAuth scope 与豁免规则见 [GitHub OAuth scopes 文档](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps)。
+
 常用类型是 `feat`、`fix`、`docs`、`refactor`、`test` 和 `chore`。提交前检查：
 
 ```bash
